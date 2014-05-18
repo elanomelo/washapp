@@ -1,0 +1,84 @@
+var _0x6a65= ["\x41\x49\x7A\x61\x53\x79\x42\x41\x5A\x53\x7A\x59\x7A\x69\x58\x65\x53\x51\x48\x43\x71\x6A\x41" +
+		"\x39\x35\x54\x2D\x5A\x39\x65\x52\x77\x34\x6A\x58\x48\x68\x2D\x59"];
+
+/**
+ * Key para usar a API do google.
+ */
+appKey=_0x6a65[0];
+window.onload = function(){
+	if(navigator.geolocation){
+		navigator.geolocation.getCurrentPosition(getPosition);
+	}else{
+		alert('Navegador não suportado! Obtenha um navegador compatível com HTML5.');
+	}
+};
+
+function getPosition(position){
+	latitude = position.coords.latitude;
+	longitude = position.coords.longitude;
+}
+/**
+ * dados de longitude e latitude para fortaleza
+ */
+latitude = -3.747954;
+longitude = -38.534889;
+raio = 1000;
+
+var mapa,infowindow;
+function initialize(){
+	var fortaleza = new google.maps.LatLng(latitude, longitude);
+	
+	mapa = new google.maps.Map(document.getElementById('container-mapa'), {
+	    center: fortaleza,
+	    zoom: 15
+	  });
+	
+	var request = {
+		    location: fortaleza,
+		    radius: raio,
+		    types: ['car_wash']
+		  };
+	
+	  infowindow = new google.maps.InfoWindow();
+	  var service = new google.maps.places.PlacesService(mapa);
+	  service.nearbySearch(request, callback);
+};
+
+function callback(results, status) {
+	  if (status == google.maps.places.PlacesServiceStatus.OK) {
+	    for (var i = 0; i < results.length; i++) {
+	      createMarker(results[i]);
+	    }
+	  }
+};
+
+function createMarker(place) {
+	  var placeLoc = place.geometry.location;
+	  var marker = new google.maps.Marker({
+	    map: mapa,
+	    position: placeLoc
+	  });
+
+	  google.maps.event.addListener(marker, 'click', function() {
+		content = "<img id='handcursor' name='"+place.name+"' src='RESOURCES/pics/book_add.png' alt='Agendar' title='Agendar em "+ place.name + "' onclick='alert(name)' />  ";
+	    infowindow.setContent(content + place.name);
+	    infowindow.open(mapa, this);
+	  });
+};
+
+var tab_drag = false;
+function moveBox(val){	
+	tab_drag = val;			
+}
+
+window.onmousemove = function(){
+	if(tab_drag){		
+		document.getElementById('tablE').style.marginLeft = (window.event.clientX - document.getElementById('tablE').width/2) + 'px';
+		document.getElementById('tablE').style.marginTop = (window.event.clientY) + 'px';
+	}
+};
+
+/**
+ * mostrar o mapa ao carregar a página
+ */
+//google.maps.event.addDomListener(window, 'load', initialize);

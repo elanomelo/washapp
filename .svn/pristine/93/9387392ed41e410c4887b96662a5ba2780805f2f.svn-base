@@ -1,0 +1,48 @@
+<%@ page language="java" contentType="text/html; charset=ISO-8859-1" pageEncoding="ISO-8859-1"%>
+<%@ taglib prefix="f"  uri="http://java.sun.com/jsf/core"%>
+<%@ taglib prefix="h"  uri="http://java.sun.com/jsf/html"%>
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
+<style type="text/css">
+    td {
+        text-align: center;
+    }
+    a{
+      color: blue;
+      text-decoration: underline;
+    }
+    a:hover{
+       cursor: pointer;       
+    }
+</style>
+</head>
+<body>
+<f:subview id="view2">
+<h:form>
+  <table style="position:absolute;z-index: 1;" bgcolor="yellow" border="1" onmousedown="moveBox(true)" onmouseup="moveBox(false)" width="250" height="50"  id="tablE">
+    <tr>        
+    	<th>
+    	   buscar estabelecimentos próximos
+    	</th>
+    </tr>    
+    <tr>  	
+         <td style="align: center"> 
+         <a onclick="initialize()">
+           procurar por próximo
+         </a>
+         </td>           
+    </tr>
+    <tr>  	
+         <td style="align: center">         
+           <h:commandLink id="agendar">
+               agendar
+           </h:commandLink>
+         </td>           
+    </tr>         
+  </table>
+ </h:form>
+</f:subview>
+</body>
+</html>
